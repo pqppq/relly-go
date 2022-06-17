@@ -5,8 +5,8 @@ import (
 )
 
 type DiskManager struct {
-	file       *os.File
-	nextPageId PageId
+	file     *os.File
+	nextPage PageId
 }
 
 func newDiskManager(file *os.File) (*DiskManager, error) {
@@ -47,8 +47,8 @@ func (m *DiskManager) writePage(page *Page, pageId PageId) error {
 }
 
 func (m *DiskManager) allocPage() PageId {
-	pgid := m.nextPageId
-	m.nextPageId++
+	pgid := m.nextPage
+	m.nextPage++
 	return pgid
 }
 

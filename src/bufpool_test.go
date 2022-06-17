@@ -25,8 +25,8 @@ func TestBufPool(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to create page")
 	}
-	p1 := b1.pageId
-	b1.isDirty = true
+	p1 := b1.id
+	b1.dirty = true
 	c1 := make([]byte, PAGE_SIZE)
 	copy(c1, []byte("Content1"))
 	copy(b1.page.data, c1)
@@ -36,7 +36,7 @@ func TestBufPool(t *testing.T) {
 	}
 
 	// pool [b1] -- fetch 0 --> b
-	b, err := m.fetchPage(b1.pageId)
+	b, err := m.fetchPage(b1.id)
 	if !bytes.Equal(b.page.data, c1) {
 		t.Fatal("page data is not equal")
 	}
@@ -54,13 +54,13 @@ func TestBufPool(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to create page")
 	}
-	p2 := b2.pageId
+	p2 := b2.id
 	c2 := make([]byte, PAGE_SIZE)
 	copy(c2, []byte("Content1"))
 	copy(b2.page.data, c2)
-	b2.isDirty = true
+	b2.dirty = true
 	err = m.diskManager.writePage(b2.page, p2)
-	b, err = m.fetchPage(b2.pageId)
+	b, err = m.fetchPage(b2.id)
 	if err != nil {
 		t.Fatal(err)
 	}
